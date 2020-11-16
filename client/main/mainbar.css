@@ -30,7 +30,9 @@ a {
     display: flex;
     list-style: none;
     padding-left: 0;
-    font-family: 'Gugi', cursive;
+    /* font-family: 'Gugi', cursive; */
+    font-family: 'Jua', sans-serif;
+    font-size: 18px;
 }
 .main_menu li {
     padding: 8px 12px;
@@ -43,7 +45,9 @@ a {
     display: flex;
     list-style : none;
     padding-left: 0;
-    font-family: 'Gugi', cursive;
+    /* font-family: 'Gugi', cursive; */
+    font-family: 'Jua', sans-serif;
+    font-size: 18px;
 }
 .main_login li {
     padding: 8px 12px;
@@ -63,7 +67,7 @@ a {
     .main {
         flex-direction: column;
         align-items: flex-start;
-        padding: 8px 24px;
+        padding: 15px 24px;
     }
     .main_menu {
         display: none;
