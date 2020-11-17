@@ -30,7 +30,7 @@ app.post('/user', function(req, res){
           }
           else{
             console.log(userID + ',' + userPW)
-            res.send('success create user name: '+userID+'pw'+userPW)
+            res.send('success create user name: '+userID+'pw: '+userPW)
           }
         })
   }
