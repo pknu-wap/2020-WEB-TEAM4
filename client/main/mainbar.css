@@ -1,3 +1,4 @@
+/* *{margin: 0; padding: 0; box-sizing: border-box;} */
 :root {
     --text-color: #000051;
     --accent-color:  red;
@@ -16,7 +17,6 @@ a {
     justify-content: space-between;
     align-items: center;
     background-color: var(--background-color);
-    padding: 8px 12px;
 }
 .main_logo {
     font-size: 30px;
