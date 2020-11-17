@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 var mysql=require('mysql')
 
 var connection=mysql.createConnection({
-  host: 192.168.43.32
+  host: "192.168.23.8",
   port:3000,
   user:"root",
   password:"1234",
@@ -41,14 +41,14 @@ app.listen(3000, function(){
 })
 
 var connection=mysql.createConnection({
-  host: 192.168.43.32
+  host: "192.168.23.8",
   port:3000,
   user:"root",
   password:"1234",
   batabase:"test"
 })
 
-connection.query("INSERT INTO user (userID, userPW) VALUES ('"+userID+"', '"userPW"')",
+connection.query("INSERT INTO user (userID, userPW) VALUES ('"+userID+"', '"+userPW+"')",
     function(error,result,fields){
 
       if(error){
