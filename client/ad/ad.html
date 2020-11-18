@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="write.css"/> 
+    <link rel="stylesheet" href="ad.css"/> 
     <link rel="stylesheet" href="all.css"> 
     <link 
         href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Gugi&family=Jua&family=Patrick+Hand&family=Source+Code+Pro:wght@500&display=swap" 
         rel="stylesheet"
     />
-    <title>Write</title>
+    <title>추천게시판</title>
     <script 
         src="https://kit.fontawesome.com/605009ce51.js" 
         crossorigin="anonymous"
     ></script>
-    <script src="write.js" defer></script>
+    <script src="ad.js" defer></script>
 </head>
 <body>
     <nav class="main">
@@ -37,19 +37,5 @@
             <i class="fas fa-bars"></i>
         </a>
        
-            
-            
-            
-    </nav> 
-    <form name="w_form" action="sample.asp" method="post">
-            <input type="hidden" name="filepath" value="/file"> <!-- 이미지업로드 경로 변수처리 혹은 직접 코딩.. -->
-              <p>
-                <input type="button" onclick="pasteHTMLDemo()" value="본문에 HTML 삽입"></input>
-                <input type="button" onclick="showHTML()" value="본문 HTML 보기"></input>
-                <input type="button" onclick="onSubmit()" value="서버에 전송"></input>
-              </p>
-              <textarea name="ir1" id="ir1" style="width:700px; height:400px"></textarea>
-              <textarea id="content" name="content" style="display:none"></textarea>
-            </form>
 </body>
 </html>
