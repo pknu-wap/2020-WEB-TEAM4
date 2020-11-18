@@ -7,6 +7,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 var mysql=require('mysql')
 
 var connection=mysql.createConnection({
+  host:"192.168.23.8",
   port:3000,
   user:"root",
   password:"1234",

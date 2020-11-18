@@ -2,9 +2,8 @@
   "name": "2020-web-team4",
   "version": "1.0.0",
   "description": "",
-  "main": "./server/app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "r./server/app.js"
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +17,7 @@
   },
   "homepage": "https://github.com/pknu-wap/2020-WEB-TEAM4#readme",
   "dependencies": {
-    "express.js": "^1.0.0"
+    "express.js": "^1.0.0",
+    "mysql": "^2.18.1"
   }
 }
