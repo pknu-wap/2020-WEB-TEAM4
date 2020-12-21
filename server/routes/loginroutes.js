@@ -1,79 +1,192 @@
-var express=require('express')
-var app=express()
-var bodyParser=require('body-parser')
 
-app.use(bodyParser.urlencoded({extended:true}))
+var express = require('express');
+var http = require('http');
+var serveStatic = require('serve-static');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var expressSession = require('express-session');
+var expressErrorHandler = require('express-error-handler');
 
-var mysql=require('mysql')
 
-exports.register=function(req,res){
-  var today=new Date();
-  var users={
-    "id": req.body.id,
-    "password": req.body.password,
-    "reconfirm": req.body.password,
-    "name":req.body.name,
-  }
-  connection.query('Insert into users set', users,function(error, results, fields){
-    if(error){
-      console.log("error", error);
-      res.send({
-        "code":400,
-        "failed":"error"
-      })
+var mySql = require('mysql');
+
+//var CONNECTION=MYSQL.CREATECONNECTION({
+//  HOST:"192.168.23.8",
+//  PORT:3000,
+//  USER:"ROOT",
+//  PASSWORD:"1234",
+//});
+
+var pool = mySql.createPool({
+    connectionLimit: 10,
+    host: 'localhost',
+    user:'root',
+    password: '000818',
+    database: 'test',
+    debug: false
+});
+
+var app = express();
+
+app.set('port', 3000);
+app.use(serveStatic(path.join('public', __dirname, 'public')));
+
+var bodyParser_post = require('body-parser');
+app.use(bodyParser_post.urlencoded({ extended: false }));
+app.use(bodyParser_post.json());
+app.use(serveStatic(path.join(__dirname, 'public')));
+app.use(cookieParser());
+
+var router = express.Router();
+router.route('/client/register').post(
+    function (req, res)
+    {
+        console.log('success');
+        var ID = req.body.id || req.query.id;
+        var Password = req.body.passwords || req.query.passwords;
+        var Name = req.body.name || req.query.name;
+        console.log('id:' + ID + ', PW: ' + PW + ' , Name: ' + Name + ');
+
+        addUser(ID, Password,  Name,
+            function (err, result) {
+                if (err) {
+                    console.log('Error');
+                    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                    res.end();
+                    return;
+                }
+                if (result)
+                {
+                    console.dir(result);
+                    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                    res.write('<h1>Add Success</h1>');
+                    res.end();
+                }
+            }
+        );
+    }
+);
+
+router.route('/client/login').post(
+    function (req, res) {
+        console.log('success');
+        var ID = req.body.id || req.query.id;
+        var PW = req.body.passwords || req.query.passwords;
+        console.log('ID : ' + ID + ', PW : ' + PW);
+
+        confirmuser(ID, PW,
+            function (err, rows)
+            {
+                if (err) {
+                    console.log('Error!');
+                    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                    res.end();
+                    return;
+                }
+
+                if (rows) {
+                    console.dir(rows);
+                    res.writeHead(200, { "Content-Type": "text/html;charset=utf-8" });
+                    res.write('<h1>Login Success</h1>');
+                    res.write('<h1> user </h1>' + rows[0].name);
+                    res.end();
+                }
+            }
+        );
+    }
+);
+
+app.use('/', router);
+
+var addUser = function(ID, Password,  Name)
+{
+    console.log('addUser 호출');
+
+    pool.getConnection(
+        function (err, poolConn)
+        {
+            if (err)
+            {
+                if (poolConn) {
+                    poolConn.release();
+                }
+                callback(err, null);
+                return;
+            }
+            console.log('데이터베이스 연결 스레드 아이디' + poolConn.threadId);
+            var data = { id: id, name: name, age: age, passwords: passwords };
+
+            //users 테이블에 데이터 추가
+            var exec = poolConn.query('insert into users set ?', data,
+                function (err, result)
+                {
+                    poolConn.release();
+                    console.log('실행된 SQL : ' + exec.sql);
+
+                    if (err) {
+                        console.log('sql 실행 시 에러 발생');
+                        callback(err, null);
+                        return;
+                    }
+                    callback(null, result);
+                }
+            );
         }
-        else{
-          console.log('The solution is:', results);
-          res.send({
-            "code":200,
-            "success":"user registered successfully"
-          });
-        }
-  });
+    );
 }
 
+var confirmuser = function (ID, PW) {
+    console.log('input id :' + ID + '  :  pw : ' + PW);
 
 
-var connection=mysql.createConnection({
-  host:"192.168.23.8",
-  port:3000,
-  user:"root",
-  password:"1234",
-  database:"test"
-})
+    pool.getConnection(function (err, poolConn) {
+        if (err) {
+            if (poolConn) {
+                poolConn.release();
+            }
+            callback(err, null);
+            return;
+        }
 
-exports.login=function(req, res){
-  var id=req.body.id;
-  var password=req.body.password;
-  connection.query('SELECT * FROM test WHERE id = ?', [id],
-  function(error, results, fields{
-    if(error){
-      res.send({
-        "code":400,
-        "failed": "error"
-      })
+        console.log('데이터베이스 연결 스레드 아이디' + poolConn.threadId);
+
+        var tablename = 'users';
+        var columns = ['id', 'name', 'age'];
+
+         var exec = poolConn.query("select ?? from ?? where id = ? and passwords=?", [columns, tablename, id, password],
+
+            function (err, rows)
+            {
+                poolConn.release();
+                console.log('실행된 ssql : ' + exec.sql);
+
+                if (err) {
+                    callback(err, null);
+                    return;
+                }
+                if (rows.length > 0) {
+                    console.log('user found');
+                    callback(null, rows);
+                } else {
+                    console.log('user not found');
+                    callback(null, null);
+                }
+            }
+      );
     }
-    else{
-      if(results.length>0){
-        if(results[0].password==password){
-          res.send({
-            "code": 200,
-            "success": "login successful"
-          });
-        }
-        else{
-          res.send({
-            "code":204,
-            "success": "do not match"
-          });
-        }
-        else{
-          res.send({
-            "code":204,
-            "success": "id does not exists"
-          });
-        }
-      }
+    );
+};
+
+var errorHandler = expressErrorHandler(
+    { static: { '404': './public/404.html' } }
+);
+
+app.use(expressErrorHandler.httpError(404));
+app.use(expressErrorHandler);
+
+var appServer = http.createServer(app);
+appServer.listen(app.get('port'),
+    function () {
+        console.log('express 웹서버 실행' + app.get('port'));
     }
-  })
-}
+);
