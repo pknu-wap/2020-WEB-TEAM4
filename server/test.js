@@ -1,11 +1,22 @@
-var express = require('express')
+var express = require("express")
+var login=require('./routes/loginroutes');
+var bodyParser=require('body-parser');
 
 var app=express()
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-app.get('/', function(req,res){
-  res.send("Hello World!")
-})
+app.use(function(req, res, next){
+  res.header("Access-control-allow-origin", "*");
+  res.header("Access-control-allow-headers", "origin, X-requested-With, Content-type, Accept");
+  next();
+});
 
-app.listen(3000, function(){
-  console.log("server starting with 3000")
-})
+var router=express.Router();
+
+
+router.post('/register', login.register);
+router.post('/login', login.login);
+
+app.use('/api', router);
+app.listen(3000);
