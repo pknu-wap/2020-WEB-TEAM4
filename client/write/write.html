@@ -9,11 +9,7 @@
         href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Gugi&family=Jua&family=Patrick+Hand&family=Source+Code+Pro:wght@500&display=swap" 
         rel="stylesheet"
     />
-    <title>Write</title>
-    <script 
-        src="https://kit.fontawesome.com/605009ce51.js" 
-        crossorigin="anonymous"
-    ></script>
+    <title>글쓰기</title>
     <script src="write.js" defer></script>
 </head>
 <body>
@@ -32,89 +28,44 @@
             <li><a href="../login/loginbar.html">LOGIN</a></li>
             <li><a href="../register/register.html">회원가입</a></li>
         </ul>
-
         <a href="#" class="mainbar_toggleBtn">
             <i class="fas fa-bars"></i>
         </a>
-       
-            
-            
-            
     </nav> 
-    
-    <h1>게시글 등록</h1>
-    <div style="width: 800px;">
-    
-    
-    <div style="margin: auto;width: 100%;">
-    
-    <table border="1" align="center" style="clear: both; width: 100%;">
-    
-    <tbody>
-    
-    <tr>
-    
-    <td width="50" align="center">
-    
-    제목
-    
-    </td>
-    
-    <td width="400">
-    
-    <input type="title" style="width: 100%;">
-    
-    </td>
-    
-    </tr>
-    
-    <tr>
-    <td width="50" align="center">
-    작성자
-    
-    </td>
-    
-    <td width="400">
-    
-    <input type="name" style="width: 100%;">
-    
-    </td>
-    
-    </tr>
-    
-    <tr>
-    
-    <th colspan="2">
-    
-    <input type="text" style="width: 100%; height: 50px;">
-    
-    
-    </th>
-    
-    </tr>
-    
-    </tbody>
-    
-    </table>
-    
-    </div>
-    
-    <div style="float: right;">
-    
-    <button type="button" name="목록" onClick="location.href='board_List.html'">
-    
-    목록
-    
-    </button>
-    
-    <button type="button" name="글쓰기" onClick="location.href='board_List.html'">
-    저장
-    </button>
-    </div>
-    </div>
+<form method=post action=border_ok.html>
+<TABLE width=1000 height=500 border=2 cellpadding=5 bgcolor=#FFFF99 align=center>
+<TR>
+ <TD colspan="2" align=center bgcolor=#99CC99 >게시판</TD>
+</TR>
+<TR>
+ <TD style=text-align:center>작성일</TD>
+ <TD bgcolor=#FFCC66><input type="date" name=day/></TD>
+</TR>      
+<TR>
+ <TD style=text-align:center>작성자</TD>
+ <TD bgcolor=#FFCC66><input type="text" name=name size=10/></TD> 
+</TR>
+<TR>
+ <TD style=text-align:center>제목</TD>
+ <TD bgcolor=#FFCC66><input type="text" size=20 maxlength=20 name=wpagt</TD>
+</TR>
+<TR>
+ <TD style=text-align:center>내용</TD>
+ <TD bgcolor=#FFCC66 ><textarea  rows=5 cols=40>여기에 내용을 입력하세요.</textarea></TD>
+</TR>
+<TR>
+    <TD method=post action=write.php style=text-align:center>
+        이미지 파일 선택 :</TD><TD><input type=file accept=image/><p></p></form>
+        <input type=submit value="확인">
+        <input type=reset value="취소">
+        </TD>
+    </TR>
+<TR>
+ <TD colspan="2" style=text-align:center>
+<input type=submit value="글쓰기">
+<input type=reset value="취소">
+</TD>
+</TR>
+</TABLE>
     </body>
-    
     </html>
-    
-</body>
-</html>
