@@ -3,20 +3,18 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 //express 미들웨어
-var bodyParser = require('body-parser')
-var cookieParser = require('cookie-parser')
+var bodyParser = require('body-parser');
 var serveStatic = require('serve-static');
-var errorHandler = require('errorhandler');
 
 var mysql = require('mysql');
 
-var connection=mysql.createConnection({
-  host:"localhost",
-  port:3000,
-  user:"root",
-  password:"1234",
-  database: "test"
-  });
+// var connection=mysql.createConnection({
+//   host:"localhost",
+//   port:3000,
+//   user:"root",
+//   password:"1234",
+//   database: "test"
+//   });
 
   var pool=mysql.createPool({
     connectionLimit:10,
@@ -26,14 +24,6 @@ var connection=mysql.createConnection({
     database:'test',
     debug:false
   });
-
-  connection.connect((err)=> {
-    if(err){
-      console.log('error');
-      return;
-    }
-    console.log('connected');
-  })
 
 var app = express();
 
@@ -46,6 +36,7 @@ app.use(bodyParser_post.json());
 app.use(serveStatic(path.join(__dirname, 'public')));
 
 var router = express.Router();
+
 router.route('/client/register').post(
     function (req, res)
     {
@@ -55,7 +46,7 @@ router.route('/client/register').post(
         var Name = req.body.name || req.query.name;
         console.log('id:' + ID + ', PW: ' + PW + ' , Name: ' + Name);
 
-        addUser(ID, Password,  Name,
+        register(ID, Password,  Name,
             function (err, result) {
                 if (err) {
                     console.log('Error');
@@ -106,9 +97,9 @@ router.route('/client/login').post(
 
 app.use('/', router);
 
-var addUser = function(ID, Password,  Name)
+var register = function(ID, Password,  Name, callback)
 {
-    console.log('addUser 호출');
+    console.log('register 호출');
 
     pool.getConnection(
         function (err, poolConn)
@@ -122,7 +113,7 @@ var addUser = function(ID, Password,  Name)
                 return;
             }
             console.log('데이터베이스 연결 스레드 아이디' + poolConn.threadId);
-            var data = { id: id, name: name, age: age, passwords: passwords };
+            var data = { id: id,  passwords: passwords, name: name };
 
             //users 테이블에 데이터 추가
             var exec = poolConn.query('insert into users set ?', data,
@@ -143,7 +134,7 @@ var addUser = function(ID, Password,  Name)
     );
 }
 
-var confirmuser = function (ID, PW) {
+var confirmuser = function (ID, PW, callback) {
     console.log('input id :' + ID + '  :  pw : ' + PW);
 
 

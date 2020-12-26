@@ -15,8 +15,8 @@ app.use(function(req, res, next){
 var router=express.Router();
 
 
-router.post('/register', login.register);
-router.post('login', login.login);
+router.post('/client/register', login.register);
+router.post('/client/login', login.login);
 
 app.use('/api', router);
 app.listen(3000);
