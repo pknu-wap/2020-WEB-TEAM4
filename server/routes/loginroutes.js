@@ -1,30 +1,29 @@
-
+//express 기본 모듈
 var express = require('express');
 var http = require('http');
-var serveStatic = require('serve-static');
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var expressSession = require('express-session');
-var expressErrorHandler = require('express-error-handler');
+//express 미들웨어
+var bodyParser = require('body-parser');
+var serveStatic = require('serve-static');
 
+var mysql = require('mysql');
 
-var mySql = require('mysql');
+// var connection=mysql.createConnection({
+//   host:"localhost",
+//   port:3000,
+//   user:"root",
+//   password:"1234",
+//   database: "test"
+//   });
 
-//var CONNECTION=MYSQL.CREATECONNECTION({
-//  HOST:"192.168.23.8",
-//  PORT:3000,
-//  USER:"ROOT",
-//  PASSWORD:"1234",
-//});
-
-var pool = mySql.createPool({
-    connectionLimit: 10,
-    host: 'localhost',
+  var pool=mysql.createPool({
+    connectionLimit:10,
+    host:'localhost',
     user:'root',
-    password: '000818',
-    database: 'test',
-    debug: false
-});
+    password:'000818',
+    database:'test',
+    debug:false
+  });
 
 var app = express();
 
@@ -35,9 +34,9 @@ var bodyParser_post = require('body-parser');
 app.use(bodyParser_post.urlencoded({ extended: false }));
 app.use(bodyParser_post.json());
 app.use(serveStatic(path.join(__dirname, 'public')));
-app.use(cookieParser());
 
 var router = express.Router();
+
 router.route('/client/register').post(
     function (req, res)
     {
@@ -45,9 +44,9 @@ router.route('/client/register').post(
         var ID = req.body.id || req.query.id;
         var Password = req.body.passwords || req.query.passwords;
         var Name = req.body.name || req.query.name;
-        console.log('id:' + ID + ', PW: ' + PW + ' , Name: ' + Name + ');
+        console.log('id:' + ID + ', PW: ' + PW + ' , Name: ' + Name);
 
-        addUser(ID, Password,  Name,
+        register(ID, Password,  Name,
             function (err, result) {
                 if (err) {
                     console.log('Error');
@@ -98,9 +97,9 @@ router.route('/client/login').post(
 
 app.use('/', router);
 
-var addUser = function(ID, Password,  Name)
+var register = function(ID, Password,  Name, callback)
 {
-    console.log('addUser 호출');
+    console.log('register 호출');
 
     pool.getConnection(
         function (err, poolConn)
@@ -114,7 +113,7 @@ var addUser = function(ID, Password,  Name)
                 return;
             }
             console.log('데이터베이스 연결 스레드 아이디' + poolConn.threadId);
-            var data = { id: id, name: name, age: age, passwords: passwords };
+            var data = { id: id,  passwords: passwords, name: name };
 
             //users 테이블에 데이터 추가
             var exec = poolConn.query('insert into users set ?', data,
@@ -135,7 +134,7 @@ var addUser = function(ID, Password,  Name)
     );
 }
 
-var confirmuser = function (ID, PW) {
+var confirmuser = function (ID, PW, callback) {
     console.log('input id :' + ID + '  :  pw : ' + PW);
 
 
@@ -151,7 +150,7 @@ var confirmuser = function (ID, PW) {
         console.log('데이터베이스 연결 스레드 아이디' + poolConn.threadId);
 
         var tablename = 'users';
-        var columns = ['id', 'name', 'age'];
+        var columns = ['id', 'pw'];
 
          var exec = poolConn.query("select ?? from ?? where id = ? and passwords=?", [columns, tablename, id, password],
 
@@ -176,13 +175,6 @@ var confirmuser = function (ID, PW) {
     }
     );
 };
-
-var errorHandler = expressErrorHandler(
-    { static: { '404': './public/404.html' } }
-);
-
-app.use(expressErrorHandler.httpError(404));
-app.use(expressErrorHandler);
 
 var appServer = http.createServer(app);
 appServer.listen(app.get('port'),
