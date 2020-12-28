@@ -40,7 +40,7 @@
     </div>
     <section class="LOGIN">
         <h1>LOGIN</h1>
-        <form action="">
+        <form id="log" name="log" method="POST" action= 'Localhost:3000/users'>
             <div class="int-area">
                 <input type="text" name="id" id="id"
                 autocomplete="off" required>
@@ -52,7 +52,7 @@
                 <label for="pw">PASSWORD</label>
             </div>
             <div class="btn-area">
-                <button type="submit">LOGIN</button>
+                <button type="submit" onclick="getInfo()">LOGIN</button>
             </div>
         </form>
     </section>
