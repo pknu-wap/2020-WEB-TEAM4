@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="write_r.css"/> 
-    <link rel="stylesheet" href="all.css"> 
-    <link 
-        href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Gugi&family=Jua&family=Patrick+Hand&family=Source+Code+Pro:wght@500&display=swap" 
+    <link rel="stylesheet" href="write_r.css"/>
+    <link rel="stylesheet" href="all.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Gugi&family=Jua&family=Patrick+Hand&family=Source+Code+Pro:wght@500&display=swap"
         rel="stylesheet"
-    />
-    <title>추천 글쓰기</title>
-    <script src="write_r.js" defer></script>
+        />
+    <title>글쓰기</title>
+    <script src="test2.js" defer></script>
 </head>
 <body>
     <nav class="main">
@@ -18,12 +18,10 @@
             <i class="fas fa-pizza-slice"></i>
             <a href="../main/mainbar.html">YummyMap</a>
         </div>
-
         <ul class="main_menu">
             <li><a href="../ad/ad.html">홍보게시판</a></li>
             <li><a href="../recommend/recommend.html">추천게시판</a></li>
         </ul>
-
         <ul class="main_login">
             <li><a href="../login/loginbar.html">LOGIN</a></li>
             <li><a href="../register/register.html">회원가입</a></li>
@@ -31,7 +29,7 @@
         <a href="#" class="mainbar_toggleBtn">
             <i class="fas fa-bars"></i>
         </a>
-    </nav> 
+    </nav>
 <form method="POST" action="../recommend/recommend.html" onsubmit="return formCheck();">
 <TABLE width=1000 height=500 border=2 cellpadding=5 bgcolor=#FFFF99 align=center>
 <TR>
@@ -40,31 +38,31 @@
 <TR>
  <TD style=text-align:center>작성일</TD>
  <TD bgcolor=#FFCC66><input type="date" name=day/></TD>
-</TR>      
+</TR>
 <TR>
  <TD style=text-align:center>작성자</TD>
- <TD bgcolor=#FFCC66><input type="text" name="name" size=10/></TD> 
+ <TD bgcolor=#FFCC66><input type="text" name="name" size=10/></TD>
 </TR>
 <TR>
  <TD style=text-align:center>제목</TD>
- <TD bgcolor=#FFCC66><input type="text" size=20 maxlength=20 name="title"></TD>
+ <TD bgcolor=#FFCC66><input type="text" size=20 maxlength=20 name=title></TD>
 </TR>
 <TR>
  <TD style=text-align:center>내용</TD>
  <TD bgcolor=#FFCC66 ><textarea  rows=5 cols=40>여기에 내용을 입력하세요.</textarea></TD>
 </TR>
 <TR>
-    <TD method="POST" action="../recommend/recommend.html" style=text-align:center>
+    <TD method="post" action="../recommend/recommend.html" style=text-align:center onsubmit="return formCheck();">
         이미지 파일 선택 :</TD>
         <TD><input type=file accept=image/><p></p>
-        <input type="submit" value="확인">
-        <input type="reset" value="취소">
+        <input type=submit value="확인">
+        <input type=reset value="취소">
         </TD>
     </TR>
 <TR>
  <TD colspan="2" style=text-align:center>
-<input class="btn btn-primary" type="submit" value="글쓰기">
-<a href="write_r.js"><input class="btn btn-primary" type=button value="취소"></a>
+<input class="btn btn-primary" type=submit value="글쓰기">
+<input class="btn btn-primary" type=button value="취소"></a>
 </TD>
 </TR>
 </TABLE>
