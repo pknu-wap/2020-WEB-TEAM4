@@ -8,15 +8,7 @@ var serveStatic = require('serve-static');
 
 var mysql = require('mysql');
 
-// var connection=mysql.createConnection({
-//   host:"localhost",
-//   port:3000,
-//   user:"root",
-//   password:"1234",
-//   database: "test"
-//   });
-
-  var pool=mysql.createPool({
+var pool=mysql.createPool({
     connectionLimit:10,
     host:'localhost',
     user:'root',
@@ -29,10 +21,8 @@ var app = express();
 
 app.set('port', 3000);
 app.use(serveStatic(path.join('public', __dirname, 'public')));
-
-var bodyParser_post = require('body-parser');
-app.use(bodyParser_post.urlencoded({ extended: false }));
-app.use(bodyParser_post.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(serveStatic(path.join(__dirname, 'public')));
 
 var router = express.Router();
@@ -97,7 +87,8 @@ router.route('/client/login').post(
 
 app.use('/', router);
 
-var register = function(ID, Password,  Name, callback)
+export default function project1 {
+  var register = function(ID, Password,  Name, callback)
 {
     console.log('register 호출');
 
@@ -112,7 +103,7 @@ var register = function(ID, Password,  Name, callback)
                 callback(err, null);
                 return;
             }
-            console.log('데이터베이스 연결 스레드 아이디' + poolConn.threadId);
+            console.log('database connection threadid' + poolConn.threadId);
             var data = { id: id,  passwords: passwords, name: name };
 
             //users 테이블에 데이터 추가
@@ -132,9 +123,11 @@ var register = function(ID, Password,  Name, callback)
             );
         }
     );
+  }
 }
 
-var confirmuser = function (ID, PW, callback) {
+export default function project2 {
+var confirmuser = function(ID, PW, callback) {
     console.log('input id :' + ID + '  :  pw : ' + PW);
 
 
@@ -147,7 +140,7 @@ var confirmuser = function (ID, PW, callback) {
             return;
         }
 
-        console.log('데이터베이스 연결 스레드 아이디' + poolConn.threadId);
+        console.log('database connection threadid' + poolConn.threadId);
 
         var tablename = 'users';
         var columns = ['id', 'pw'];
@@ -175,10 +168,78 @@ var confirmuser = function (ID, PW, callback) {
     }
     );
 };
+}
 
 var appServer = http.createServer(app);
 appServer.listen(app.get('port'),
     function () {
-        console.log('express 웹서버 실행' + app.get('port'));
-    }
-);
+        console.log('express server on' + app.get('port'));
+    });
+
+// //express 기본 모듈
+// var express = require('express');
+// var http = require('http');
+// var path = require('path');
+// //express 미들웨어
+// var bodyParser = require('body-parser');
+// var serveStatic = require('serve-static');
+//
+// var mysql = require('mysql');
+// exports.register = function (req, res) {
+//     // console.log("req", req.body);
+//     var users = {
+//         "id": req.body.id,
+//         "password": req.body.password,
+//         "name": req.body.name,
+//         "email": req.body.email,
+//     }
+//     connenction.query('INSERT INTO users SET ?' , users, function (error, results, fields) {
+//         if (error) {
+//             console.log("error ocurred", error);
+//             res.send({
+//                 "code" : 400,
+//                 "failed": "error ocurred"
+//             })
+//         } else {
+//             console.log('The solution is: ', results);
+//             res.send({
+//                 "code": 200,
+//                 "success": "user registered sucessfully"
+//             });
+//         }
+//     });
+// }
+// exports.login = function (req, res) {
+//     var email = req.body.email;
+//     var password = req.body.password;
+//     connection.query('SELECT * FROM users WHERE email = ?', [email],
+//     function( error, results, fields) {
+//         if (error) {
+//             // console.log("error ocurred", error);
+//             res.send({
+//                 "code": 400,
+//                 "failed": "error ocurred"
+//             })
+//         } else {
+//             // console.log('The solution is: ', results);
+//             if(results.length > 0) {
+//                 if(results[0].password == password) {
+//                     res.send({
+//                         "code": 200,
+//                         "success": "login sucessfull"
+//                     });
+//                 } else {
+//                     res.send({
+//                         "code": 204,
+//                         "success": "Email and password does not match"
+//                     });
+//                 }
+//             } else {
+//                 res.send({
+//                     "code":204,
+//                     "success": "Email does not exists"
+//                 });
+//             }
+//         }
+//     })
+// }

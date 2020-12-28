@@ -1,3 +1,6 @@
+import project1 from './loginroutes.js';
+import project2 from './loginroutes.js';
+
 var express = require("express");
 var login=require('./routes/loginroutes');
 var bodyParser=require('body-parser');
@@ -14,9 +17,10 @@ app.use(function(req, res, next){
 
 var router=express.Router();
 
-
 router.post('/client/register', login.register);
 router.post('/client/login', login.login);
 
 app.use('/api', router);
-app.listen(3000);
+app.listen(3000, function(){
+  console.log("server on");
+});
