@@ -32,10 +32,10 @@
             <i class="fas fa-bars"></i>
         </a>
     </nav> 
-<form method="post" action="../main/mainbar.html">
+<form method="post" action="../ad/ad.html" onsubmit="return formCheck();">
 <TABLE width=1000 height=500 border=2 cellpadding=5 bgcolor=#FFFF99 align=center>
 <TR>
- <TD colspan="2" align=center bgcolor=#99CC99 >게시판</TD>
+ <TD colspan="2" align=center bgcolor=#99CC99>게시판</TD>
 </TR>
 <TR>
  <TD style=text-align:center>작성일</TD>
@@ -54,14 +54,15 @@
  <TD bgcolor=#FFCC66 ><textarea  rows=5 cols=40>여기에 내용을 입력하세요.</textarea></TD>
 </TR>
 <TR>
-    <TD method="post" action=write.php style=text-align:center>
-        이미지 파일 선택 :</TD>
-        <TD><input type=file accept=image/><p></p>
-        <input type=submit value="확인">
-        <input type=reset value="취소">
+    <TD style=text-align:center>이미지 파일 선택</TD>
+    <TD>
+        <div class="filebox"> 
+            <input class="upload-name" value="파일선택" disabled="disabled"> 
+            <label for="ex_filename">업로드</label> 
+            <input type="file" id="ex_filename" class="upload-hidden">
+    </div>
         </TD>
     </TR>
-<TR>
  <TD colspan="2" style=text-align:center>
 <input class="btn btn-primary" type=submit value="글쓰기">
 <a href="write_a.js"><input class="btn btn-primary" type=button value="취소"></a>

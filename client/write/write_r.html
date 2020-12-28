@@ -54,11 +54,13 @@
  <TD bgcolor=#FFCC66 ><textarea  rows=5 cols=40>여기에 내용을 입력하세요.</textarea></TD>
 </TR>
 <TR>
-    <TD method="POST" action="../recommend/recommend.html" style=text-align:center>
-        이미지 파일 선택 :</TD>
-        <TD><input type=file accept=image/><p></p>
-        <input type="submit" value="확인">
-        <input type="reset" value="취소">
+    <TD style=text-align:center>이미지 파일 선택</TD>
+    <TD>
+        <div class="filebox"> 
+            <input class="upload-name" value="파일선택" disabled="disabled"> 
+            <label for="ex_filename">업로드</label> 
+            <input type="file" id="ex_filename" class="upload-hidden">
+    </div>
         </TD>
     </TR>
 <TR>
