@@ -108,4 +108,10 @@ a {
     .main_login.active{
         display: flex;
     }
+    .image1 {
+        display: none;
+    }
+    .image2 {
+        display: none;
+    }
 }
