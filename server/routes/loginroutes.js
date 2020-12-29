@@ -1,12 +1,12 @@
 //express 기본 모듈
-var express = require('express');
-var http = require('http');
-var path = require('path');
+var express = import from('express');
+var http = import from('http');
+var path = import from('path');
 //express 미들웨어
-var bodyParser = require('body-parser');
-var serveStatic = require('serve-static');
+var bodyParser = import from('body-parser');
+var serveStatic = import from('serve-static');
 
-var mysql = require('mysql');
+var mysql = import from('mysql');
 
 var pool=mysql.createPool({
     connectionLimit:10,
@@ -87,8 +87,7 @@ router.route('/client/login').post(
 
 app.use('/', router);
 
-export default function project1 {
-  var register = function(ID, Password,  Name, callback)
+export default function register(ID, Password,  Name, callback)
 {
     console.log('register 호출');
 
@@ -126,8 +125,7 @@ export default function project1 {
   }
 }
 
-export default function project2 {
-var confirmuser = function(ID, PW, callback) {
+export function confirmuser(ID, PW, callback) {
     console.log('input id :' + ID + '  :  pw : ' + PW);
 
 
